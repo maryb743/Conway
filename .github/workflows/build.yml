@@ -1,0 +1,28 @@
+name: Build Conway Game of Life
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update packages
+        run: sudo apt-get update
+
+      - name: Install build tools
+        run: sudo apt-get install -y build-essential git
+
+      - name: Compile Conway
+        run: make
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: conway-executable
+          path: ./conway
+          if-no-files-found: error
